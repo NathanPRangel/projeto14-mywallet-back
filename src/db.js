@@ -10,3 +10,4 @@ await mongoClient.connect();
 const db = mongoClient.db();
 
 export default db;
+
