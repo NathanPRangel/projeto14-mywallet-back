@@ -1,13 +1,13 @@
-
-
-
-export default function validateEntradaSchema(schema) {
-    return (req, res, next)=> {
-        const {valor, descricao} = req.body
-        const {error, value}= schema.validate ({valor, descricao})
-        if (error) return res.status(422).send(error.message)  
-
-        res.locals.value = value;
-        next();
+export function validateSchema(schema) {
+    return (req, res, next) => {
+      const { error } = schema
+        .validate(req.body,
+          { abortEarly: false })
+  
+      if (error) {
+        const errorMessages = error.details.map(err => err.message)
+        return res.status(422).send(errorMessages)
+      }
+      next()
     }
-}
+  }
